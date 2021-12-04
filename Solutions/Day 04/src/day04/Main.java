@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Main {
 
@@ -51,8 +50,8 @@ public class Main {
         try(Scanner scanner = new Scanner(Path.of("input.txt"));){
             numbers.addAll(
                     Arrays.stream(scanner.nextLine().split(","))
-                    .mapToInt(Integer::valueOf)
-                    .boxed().collect(Collectors.toList()));
+                    .map(Integer::parseInt)
+                    .toList());
             while(scanner.hasNextInt()){
                 boards.add(new BingoBoard(scanner));
             }
