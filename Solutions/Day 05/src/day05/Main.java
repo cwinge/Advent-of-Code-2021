@@ -29,13 +29,7 @@ public class Main {
                 line.getPoints().forEach(p -> overlaps.merge(p, 1, Integer::sum));
             }
         }
-
-        int overlapping = 0;
-        for(Point p : overlaps.keySet()){
-            if(overlaps.get(p) != 1){
-                overlapping++;
-            }
-        }
+        var overlapping = overlaps.keySet().stream().filter(p -> overlaps.get(p) > 1).count();
         String part = partOne ? "one" : "two";
         System.out.printf("Part %s solution - Number of lines overlapping: %d%n", part, overlapping);
     }
