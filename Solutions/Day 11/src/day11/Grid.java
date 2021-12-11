@@ -19,9 +19,6 @@ public class Grid {
         for(int i = 0; i < row.length(); i++){
             list.add(new Octopus(rows, i, Character.getNumericValue(row.charAt(i))));
         }
-        for(char c : row.toCharArray()){
-
-        }
         grid.add(list);
         if(cols == 0)
             cols = row.length();
