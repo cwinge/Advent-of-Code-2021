@@ -28,7 +28,7 @@ public class Main {
 
     public static int search(Set<Node> visited, Node current, boolean canVisitTwice){
         int paths = 0;
-        boolean canVisit = canVisitTwice;
+
         Set<Node> newVisited = new HashSet<>(visited);
         newVisited.add(current);
         for(Node n : current.neighbours){
@@ -39,12 +39,11 @@ public class Main {
                 continue;
             }
             if(!n.isBig && newVisited.contains(n)){
-                if(!canVisit)
+                if(!canVisitTwice)
                     continue;
-                canVisit = false;
-            }
-            paths += search(newVisited, n, canVisit);
-            canVisit = canVisitTwice;
+                paths += search(newVisited, n, false);
+            }else
+                paths += search(newVisited, n, canVisitTwice);
         }
         return paths;
     }

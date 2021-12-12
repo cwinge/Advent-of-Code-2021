@@ -22,7 +22,7 @@ public class Node {
     public void addNeighbour(Node n){
         neighbours.add(n);
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
