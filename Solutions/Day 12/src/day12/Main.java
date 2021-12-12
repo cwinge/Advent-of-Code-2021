@@ -18,12 +18,12 @@ public class Main {
     public static void partOne(List<Node> nodes){
         Node start = nodes.get(nodes.indexOf(new Node("start")));
         int answer = search(new HashSet<Node>(), start, false);
-        System.out.println(answer);
+        System.out.printf("Part one solution - paths: %d%n", answer);
     }
     public static void partTwo(List<Node> nodes){
         Node start = nodes.get(nodes.indexOf(new Node("start")));
         int answer = search(new HashSet<Node>(), start, true);
-        System.out.println(answer);
+        System.out.printf("Part two solution - paths with one repeated small cave allowed: %d%n", answer);
     }
 
     public static int search(Set<Node> visited, Node current, boolean canVisitTwice){
