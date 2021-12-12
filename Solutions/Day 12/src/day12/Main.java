@@ -28,9 +28,9 @@ public class Main {
 
     public static int search(Set<Node> visited, Node current, boolean canVisitTwice){
         int paths = 0;
-
         Set<Node> newVisited = new HashSet<>(visited);
         newVisited.add(current);
+		
         for(Node n : current.neighbours){
             if(n.isStart)
                 continue;
