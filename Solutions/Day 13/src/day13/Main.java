@@ -54,7 +54,7 @@ public class Main {
         }
         for(boolean []row : dots){
             for(boolean p : row){
-                sb.append(p ? "#" : " ");
+                sb.append(p ? "█" : " ");
             }
             sb.append(System.lineSeparator());
         }
