@@ -42,7 +42,7 @@ public class Main {
                 foldUp(i);
             }
         }
-        System.out.printf("Part two solution - %n%s%n", gridToString());
+        System.out.printf("Part two solution:%n%s%n", gridToString());
     }
 
     public static String gridToString(){
@@ -54,11 +54,7 @@ public class Main {
         }
         for(boolean []row : dots){
             for(boolean p : row){
-                if(p){
-                    sb.append("X");
-                }else{
-                    sb.append(" ");
-                }
+                sb.append(p ? "#" : " ");
             }
             sb.append(System.lineSeparator());
         }
