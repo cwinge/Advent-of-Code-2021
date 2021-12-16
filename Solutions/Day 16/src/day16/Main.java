@@ -74,32 +74,24 @@ public class Main {
     public static record Packet(int version, int type, OptionalLong literal, Optional<List<Packet>> subPackets) {
         public int sum() {
             if (!literal.isPresent())
-                return version + subPackets.get().stream().collect(Collectors.summingInt(Packet::sum));
+                return version + subPackets.get().stream().mapToInt(Packet::sum).sum();
             else
                 return version;
         }
 
         public long evaluate() {
-            switch (type) {
-                case 0: // +=
-                    return subPackets.get().stream().collect(Collectors.summingLong(Packet::evaluate));
-                case 1: // *=
-                    return subPackets.get().stream().mapToLong(Packet::evaluate).reduce(1L, (a, b) -> a * b);
-                case 2: // min
-                    return subPackets.get().stream().mapToLong(Packet::evaluate).min().getAsLong();
-                case 3: // max
-                    return subPackets.get().stream().mapToLong(Packet::evaluate).max().getAsLong();
-                case 4: // literal
-                    return literal.getAsLong();
-                case 5: // >
-                    return (subPackets.get().get(0).evaluate() > subPackets.get().get(1).evaluate()) ? 1 : 0;
-                case 6: // <
-                    return (subPackets.get().get(0).evaluate() < subPackets.get().get(1).evaluate()) ? 1 : 0;
-                case 7: // ==
-                    return (subPackets.get().get(0).evaluate() == subPackets.get().get(1).evaluate()) ? 1 : 0;
-                default:
-                    throw new IllegalStateException("Invalid type " + type);
-            }
+            long result = switch (type) {
+                case 0 -> (Long) subPackets.get().stream().mapToLong(Packet::evaluate).sum();
+                case 1 -> subPackets.get().stream().mapToLong(Packet::evaluate).reduce(1L, (a, b) -> a * b);
+                case 2 -> subPackets.get().stream().mapToLong(Packet::evaluate).min().getAsLong();
+                case 3 -> subPackets.get().stream().mapToLong(Packet::evaluate).max().getAsLong();
+                case 4 -> literal.getAsLong();
+                case 5 -> (subPackets.get().get(0).evaluate() > subPackets.get().get(1).evaluate()) ? 1L : 0L;
+                case 6 -> (subPackets.get().get(0).evaluate() < subPackets.get().get(1).evaluate()) ? 1 : 0;
+                case 7 -> (subPackets.get().get(0).evaluate() == subPackets.get().get(1).evaluate()) ? 1 : 0;
+                default -> throw new IllegalStateException("Invalid type " + type);
+            };
+            return result;
         }
     }
 
@@ -130,8 +122,7 @@ public class Main {
                     case 'D' -> "1101";
                     case 'E' -> "1110";
                     case 'F' -> "1111";
-                    default -> throw new NumberFormatException("Invalid character "
-                            + (char) ch);
+                    default -> throw new NumberFormatException("Invalid character " + (char) ch);
                 })
                 .collect(Collectors.joining());
     }
