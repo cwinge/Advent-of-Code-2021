@@ -34,7 +34,7 @@ public class Main {
 
     public static void partTwo(){
         createQuantumRollOutcomes();
-        playQuantum(playerPos[0]+1, playerPos[1]+1, 0, 0, 1, 0);
+        playQuantum(playerPos[0], playerPos[1], 0, 0, 1, 0);
         System.out.printf("Part two solution - max wins: %d%n", Math.max(playerWins[0], playerWins[1]));
     }
 
@@ -52,15 +52,11 @@ public class Main {
         for(Integer k : quantumRolls.keySet()){
             int newP1Pos = playerOnePos, newP1Score = playerOneScore, newP2Pos = playerTwoPos, newP2Score = playerTwoScore;
             if(player == 0){
-                newP1Pos += k;
-                if(newP1Pos > 10)
-                    newP1Pos -= 10;
-                newP1Score += newP1Pos;
+                newP1Pos = (newP1Pos + k) % 10;
+                newP1Score += newP1Pos + 1;
             }else{
-                newP2Pos += k;
-                if(newP2Pos > 10)
-                    newP2Pos -= 10;
-                newP2Score += newP2Pos;
+                newP2Pos = (newP2Pos + k) % 10;
+                newP2Score += newP2Pos + 1;
             }
             playQuantum(newP1Pos, newP2Pos, newP1Score,newP2Score, paths * quantumRolls.get(k) ,(player + 1) % 2 );
         }
